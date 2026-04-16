@@ -12,7 +12,7 @@ function getResend(): Resend {
 }
 
 const FROM = 'Sacred Secretion <sacred@nodebase.ca>';
-const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL || 'https://sacred-secretion-agent.vercel.app';
+const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL || 'https://sacred-secretion-agent-2zug.vercel.app';
 
 function wrap(name: string, body: string, unsubscribeToken: string): string {
   return `

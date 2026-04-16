@@ -2,7 +2,7 @@
 
 A minimal web app that tracks the monthly lunar cycle for each subscriber and sends practice-guiding emails at every phase of the sacred secretion process.
 
-**Live:** [sacred-secretion-agent.vercel.app](https://sacred-secretion-agent.vercel.app)
+**Live:** [sacred-secretion-agent-2zug.vercel.app](https://sacred-secretion-agent-2zug.vercel.app)
 
 Built on the three-paper research series: **[github.com/dm3n/sacred-secretion](https://github.com/dm3n/sacred-secretion)**
 
