@@ -10,19 +10,6 @@ export function emailAlreadySent(cycle: Cycle, key: string): boolean {
   return (cycle.emails_sent || []).includes(key);
 }
 
-async function markSent(cycleId: string, key: string) {
-  await supabase
-    .from('cycles')
-    .update({
-      emails_sent: supabase.rpc('array_append_unique', { arr: [], val: key }), // handled below
-      updated_at: new Date().toISOString(),
-    })
-    .eq('id', cycleId);
-
-  // Append key using postgres array concatenation via raw update
-  await supabase.rpc('cycle_mark_email_sent', { p_cycle_id: cycleId, p_key: key });
-}
-
 async function setPhase(cycleId: string, phase: string) {
   await supabase.from('cycles').update({ phase, updated_at: new Date().toISOString() }).eq('id', cycleId);
 }

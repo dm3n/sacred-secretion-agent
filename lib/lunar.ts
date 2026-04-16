@@ -9,8 +9,7 @@
  *                      Aquarius=10, Pisces=11
  */
 
-// eslint-disable-next-line @typescript-eslint/no-require-imports
-const { julian, moonposition } = require('astronomia');
+import { julian, moonposition } from 'astronomia';
 
 export const SIGNS = [
   'Aries', 'Taurus', 'Gemini', 'Cancer', 'Leo', 'Virgo',

@@ -77,7 +77,7 @@ export function SubscribeForm() {
         <Label htmlFor="sign" className="text-sm text-neutral-400 tracking-wide uppercase text-xs">Natal Sun Sign</Label>
         <Select
           value={form.sun_sign}
-          onValueChange={(v) => setForm({ ...form, sun_sign: v })}
+          onValueChange={(v) => setForm({ ...form, sun_sign: v ?? '' })}
           required
         >
           <SelectTrigger className="bg-neutral-900 border-neutral-800 text-white focus:ring-neutral-600 h-11">
