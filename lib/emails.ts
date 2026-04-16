@@ -1,6 +1,15 @@
 import { Resend } from 'resend';
 
-const resend = new Resend(process.env.RESEND_API_KEY);
+let _resend: Resend | null = null;
+
+function getResend(): Resend {
+  if (!_resend) {
+    const apiKey = process.env.RESEND_API_KEY;
+    if (!apiKey) throw new Error('RESEND_API_KEY is not set');
+    _resend = new Resend(apiKey);
+  }
+  return _resend;
+}
 
 const FROM = 'Sacred Secretion <sacred@nodebase.ca>';
 const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL || 'https://sacred-secretion-agent.vercel.app';
@@ -26,7 +35,7 @@ type EmailArgs = { name: string; email: string; unsubscribeToken: string; sign: 
 
 export const EMAILS = {
   welcome: ({ name, email, unsubscribeToken, sign }: EmailArgs) =>
-    resend.emails.send({
+    getResend().emails.send({
       from: FROM, to: email,
       subject: 'Welcome — the practice begins',
       html: wrap(name, `
@@ -56,7 +65,7 @@ export const EMAILS = {
     }),
 
   windowOpens: ({ name, email, unsubscribeToken, sign }: EmailArgs) =>
-    resend.emails.send({
+    getResend().emails.send({
       from: FROM, to: email,
       subject: `The window is open — 2.5 days`,
       html: wrap(name, `
@@ -79,7 +88,7 @@ export const EMAILS = {
     }),
 
   windowDay1: ({ name, email, unsubscribeToken }: EmailArgs) =>
-    resend.emails.send({
+    getResend().emails.send({
       from: FROM, to: email,
       subject: 'Day 1 — what to do today',
       html: wrap(name, `
@@ -97,7 +106,7 @@ export const EMAILS = {
     }),
 
   windowMidpoint: ({ name, email, unsubscribeToken }: EmailArgs) =>
-    resend.emails.send({
+    getResend().emails.send({
       from: FROM, to: email,
       subject: 'Gethsemane — the pressure point',
       html: wrap(name, `
@@ -117,7 +126,7 @@ export const EMAILS = {
     }),
 
   windowClosing: ({ name, email, unsubscribeToken }: EmailArgs) =>
-    resend.emails.send({
+    getResend().emails.send({
       from: FROM, to: email,
       subject: 'Final hours — hold',
       html: wrap(name, `
@@ -134,7 +143,7 @@ export const EMAILS = {
     }),
 
   ascentWeek1: ({ name, email, unsubscribeToken }: EmailArgs) =>
-    resend.emails.send({
+    getResend().emails.send({
       from: FROM, to: email,
       subject: 'Day 7 — the signals',
       html: wrap(name, `
@@ -151,7 +160,7 @@ export const EMAILS = {
     }),
 
   ascentWeek2: ({ name, email, unsubscribeToken }: EmailArgs) =>
-    resend.emails.send({
+    getResend().emails.send({
       from: FROM, to: email,
       subject: 'Day 14 — deepen the practice',
       html: wrap(name, `
@@ -167,7 +176,7 @@ export const EMAILS = {
     }),
 
   preWindow: ({ name, email, unsubscribeToken, sign }: EmailArgs) =>
-    resend.emails.send({
+    getResend().emails.send({
       from: FROM, to: email,
       subject: 'Your next window opens in ~2 days',
       html: wrap(name, `
