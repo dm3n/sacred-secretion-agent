@@ -29,21 +29,34 @@ export function SubscribeForm() {
     setLoading(true);
     setError('');
 
-    const res = await fetch('/api/subscribe', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(form),
-    });
+    try {
+      const res = await fetch('/api/subscribe', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(form),
+      });
 
-    const data = await res.json();
+      let data: { error?: string } | null = null;
+      const contentType = res.headers.get('content-type') || '';
 
-    if (!res.ok) {
-      setError(data.error || 'Something went wrong. Please try again.');
+      if (contentType.includes('application/json')) {
+        data = await res.json();
+      } else {
+        const text = await res.text();
+        data = text ? { error: text } : null;
+      }
+
+      if (!res.ok) {
+        setError(data?.error || 'Something went wrong. Please try again.');
+        return;
+      }
+
+      router.push('/subscribed');
+    } catch {
+      setError('Network error. Please try again.');
+    } finally {
       setLoading(false);
-      return;
     }
-
-    router.push('/subscribed');
   }
 
   return (
